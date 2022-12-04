@@ -2,25 +2,13 @@ from read_data import get_data_08_all_line_ints
 
 
 def contains(p1, p2):
-    if p2[0] <= p1[0] <= p2[1]:
-        if p2[1] >= p1[1] >= p2[0]:
-            return True
-    if p1[0] <= p2[0] <= p1[1]:
-        if p1[1] >= p2[1] >= p1[0]:
-            return True
-    return False
+    p = sorted(p1 + p2)
+    return [p[1], p[2]] == p1 or [p[1], p[2]] == p2
 
 
 def overlaps(p1, p2):
-    if p2[0] <= p1[0] <= p2[1]:
-        return True
-    if p2[1] >= p1[1] >= p2[0]:
-        return True
-    if p1[0] <= p2[0] <= p1[1]:
-        return True
-    if p1[1] >= p2[1] >= p1[0]:
-        return True
-    return False
+    p1, p2 = sorted([p1, p2])
+    return p1[1] >= p2[0]
 
 
 def part1(data):
@@ -34,7 +22,6 @@ def part2(data):
 if __name__ == '__main__':
     input_data = get_data_08_all_line_ints('input04.txt')
     input_data = [[d[:2], d[2:]] for d in input_data]
-    print(input_data)
 
     # part 1
     r1 = part1(input_data)
