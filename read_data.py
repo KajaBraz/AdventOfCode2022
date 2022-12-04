@@ -136,3 +136,18 @@ def get_data_07(path: str) -> tuple[str, dict[str, str]]:
     start = input_rules[0]
     input_rules = {input_rules[a]: input_rules[a + 2] for a in range(1, len(input_rules) - 1) if (a - 1) % 3 == 0}
     return start, input_rules
+
+
+def get_data_08_all_line_ints(path: str) -> list[list[int]]:
+    """
+    File content example:
+
+    2-4,6-8
+    2-3,4-5
+    5-7,7-9
+
+    Return example: [[2, 4, 6, 8], [2, 3, 4, 5], [5, 7, 7, 9]]
+    """
+
+    data = get_data_02_str_list(path)
+    return [[int(n) for n in gr] for gr in [re.findall('\d+', row) for row in data]]
