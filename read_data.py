@@ -70,6 +70,20 @@ def get_data_04_two_dim_str_list(path: str) -> list[list[str]]:
     return [line.split() for line in input_lines]
 
 
+def get_data_05_str_int_two_cols(path: str) -> list[tuple[str, int]]:
+    """
+    File content example:
+
+    R 4
+    U 4
+    L 3
+
+    Return example: [('A', 4), ('U', 4), ('L', 3)]
+    """
+
+    return [(x, int(y)) for x, y in [row.split() for row in open(path, 'r').readlines()]]
+
+
 def get_data_05_alternate_rows_lists(path: str) -> tuple[list[str], list[int]]:
     """
     File content example:
