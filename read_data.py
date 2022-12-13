@@ -81,10 +81,10 @@ def get_data_05_str_int_two_cols(path: str) -> list[tuple[str, int]]:
     Return example: [('A', 4), ('U', 4), ('L', 3)]
     """
 
-    return [(x, int(y)) for x, y in [row.split() for row in open(path, 'r').readlines()]]
+    return [(c[0], int(c[1])) if len(c) == 2 else (c[0],) for c in [row.split() for row in open(path, 'r').readlines()]]
 
 
-def get_data_05_alternate_rows_lists(path: str) -> tuple[list[str], list[int]]:
+def get_data_06_alternate_rows_lists(path: str) -> tuple[list[str], list[int]]:
     """
     File content example:
 
@@ -105,7 +105,7 @@ def get_data_05_alternate_rows_lists(path: str) -> tuple[list[str], list[int]]:
     return directions, values
 
 
-def get_data_06(path: str) -> tuple[set[tuple[int, int]], list[tuple[str, int]]]:
+def get_data_07(path: str) -> tuple[set[tuple[int, int]], list[tuple[str, int]]]:
     """
     File content example:
 
@@ -132,7 +132,7 @@ def get_data_06(path: str) -> tuple[set[tuple[int, int]], list[tuple[str, int]]]
     return points, instructions
 
 
-def get_data_07(path: str) -> tuple[str, dict[str, str]]:
+def get_data_08(path: str) -> tuple[str, dict[str, str]]:
     """
     File content example:
 
@@ -152,7 +152,7 @@ def get_data_07(path: str) -> tuple[str, dict[str, str]]:
     return start, input_rules
 
 
-def get_data_08_all_line_ints(path: str) -> list[list[int]]:
+def get_data_09_all_line_ints(path: str) -> list[list[int]]:
     """
     File content example:
 
@@ -164,4 +164,4 @@ def get_data_08_all_line_ints(path: str) -> list[list[int]]:
     """
 
     data = get_data_02_str_list(path)
-    return [[int(n) for n in gr] for gr in [re.findall('\d+', row) for row in data]]
+    return [[int(n) for n in gr] for gr in [re.findall(r'\d+', row) for row in data]]
