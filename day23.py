@@ -3,7 +3,7 @@ from collections import Counter
 from read_data import get_data_02_str_list
 
 
-def get_initial_positions(data):
+def get_initial_positions(data: list[str]) -> set[tuple[int, int]]:
     positions = set()
     for i in range(len(data)):
         for j in range(len(data[i])):
@@ -12,21 +12,21 @@ def get_initial_positions(data):
     return positions
 
 
-def get_all_neighs(x, y):
+def get_all_neighs(x: int, y: int) -> set[tuple[int, int]]:
     return {(x + i, y + j) for i in (1, 0, -1) for j in (1, 0, -1)} - {(x, y)}
 
 
-def get_direction_neighs(x, y, direction):
+def get_direction_neighs(x: int, y: int, direction: str) -> set[tuple[int, int]]:
     neighs_positions = {'N': ((-1, 0), (-1, 1), (-1, -1)), 'S': ((1, 0), (1, 1), (1, -1)),
                         'W': ((0, -1), (-1, -1), (1, -1)), 'E': ((0, 1), (-1, 1), (1, 1))}
     return {(x + neigh[0], y + neigh[1]) for neigh in neighs_positions[direction]}
 
 
-def can_move(considered_neighs, elves_positions):
+def can_move(considered_neighs, elves_positions: set[tuple[int, int]]) -> bool:
     return all(neigh not in elves_positions for neigh in considered_neighs)
 
 
-def choose_direction(round_directions, x, y, elves_positions):
+def choose_direction(round_directions, x: int, y: int, elves_positions: set[tuple[int, int]]) -> str:
     for dir in round_directions:
         all_neighs = get_all_neighs(x, y)
         if can_move(all_neighs, elves_positions):
@@ -37,12 +37,12 @@ def choose_direction(round_directions, x, y, elves_positions):
     return ''
 
 
-def get_new_position(x, y, direction):
+def get_new_position(x: int, y: int, direction: str) -> tuple[int, int]:
     new_directions = {'N': (-1, 0), 'S': (1, 0), 'W': (0, -1), 'E': (0, 1), '': (0, 0)}
     return x + new_directions[direction][0], y + new_directions[direction][1]
 
 
-def propose_moves(round_directions, elves_positions):
+def propose_moves(round_directions, elves_positions: set[tuple[int, int]]) -> dict[tuple[int, int], tuple[int, int]]:
     proposed_positions = {}
     for x, y in elves_positions:
         proposed_dir = choose_direction(round_directions, x, y, elves_positions)
@@ -51,7 +51,7 @@ def propose_moves(round_directions, elves_positions):
     return proposed_positions
 
 
-def move_round(proposed_moves):
+def move_round(proposed_moves: dict[tuple[int, int], tuple[int, int]]) -> set[tuple[int, int]]:
     proposed = Counter(proposed_moves.values())
     new_positions = set()
     for old_pos, new_pos in proposed_moves.items():
@@ -62,7 +62,7 @@ def move_round(proposed_moves):
     return new_positions
 
 
-def calculate_area(elves_positions):
+def calculate_area(elves_positions: set[tuple[int, int]]) -> int:
     edges_up_down = {pos[0] for pos in elves_positions}
     edges_right_down = {pos[1] for pos in elves_positions}
     up, down = min(edges_up_down), max(edges_up_down)
@@ -71,11 +71,11 @@ def calculate_area(elves_positions):
     return area
 
 
-def count_empty_tiles(area, elves_positions):
+def count_empty_tiles(area, elves_positions: set[tuple[int, int]]) -> int:
     return area - len(elves_positions)
 
 
-def part_1(data):
+def part_1(data: list[str]) -> int:
     new_positions = get_initial_positions(data)
     round_directions = ['N', 'S', 'W', 'E']
     for _ in range(10):
@@ -87,7 +87,7 @@ def part_1(data):
     return count_empty_tiles(all_tiles, new_positions)
 
 
-def part_2(data):
+def part_2(data: list[str]) -> int:
     elves_positions = set()
     new_positions = get_initial_positions(data)
     round_directions = ['N', 'S', 'W', 'E']
