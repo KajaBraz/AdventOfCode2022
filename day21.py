@@ -42,7 +42,7 @@ def get_humn_val(jobs_dict: dict[str, list[str, str, str] | list[str]], humn_sid
     expression = f'{expression} - {equality_num}'
     humn = sympy.symbols('humn')
     result = eval(f'sympy.solve({expression})')
-    return result[0]
+    return int(eval(str(result[0])))
 
 
 if __name__ == '__main__':
