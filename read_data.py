@@ -4,7 +4,7 @@ import re
 def get_data_00(path: str) -> str:
     with open(path) as f:
         content = f.read()
-    return content
+    return content.strip()
 
 
 def get_data_01_int_list(path: str) -> list[int]:
